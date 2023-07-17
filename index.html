@@ -2,133 +2,97 @@
 <html>
   <head>
     <title>Carregar arquivo Excel</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div>
-      <h2>Selecione a tabela</h2>
-      <label for="codigoTabPreco">Código da Tabela de Preços:</label>
-      <select id="codigoTabPreco">
-        <option value="">Selecione uma tabela de preço</option>
-        <option value="01">01 - TABELA DE VAREJO</option>
-        <option value="02">02 - TABELA ATACADO</option>
-        <option value="03">03 - TABELA PROMOCÃO</option>
-        <option value="04">04 - TABELA DE CMV</option>
-        <option value="05">05 - TABELA ATACADO ROYALTIES</option>
-        <option value="06">06 - TABELA IGUATEMI</option>
-        <option value="07">07 - TABELA ON LINE</option>
-        <option value="08">08 - TABELA DE CUSTO</option>
-        <option value="09">09 - TABELA PREÇO PROMOCIONAL</option>
-        <option value="10">10 - TABELA MOSTRUÁRIO</option>
-        <option value="11">11 - TABELA RELANÇADOS</option>
-        <option value="12">12 - TABELA PRIVALIA</option>
-        <option value="13">13 - ATACADO PARA LOJA RJ E SP</option>
-        <option value="14">14 - VAREJO PARA RJ</option>
-        <option value="15">15 - CUSTO MÉDIO MÓVEL EFETIVO</option>
-        <option value="16">16 - TABELA TROC</option>
-        <option value="17">17 - CUSTO BRINDE</option>
-      </select>
+    <div class="container">
+      <div class="select-table">
+        <h2>Selecione a tabela</h2>
+        <label for="codigoTabPreco">Código da Tabela de Preços:</label>
+        <select id="codigoTabPreco" class="form-select">
+          <option value="">Selecione uma tabela de preço</option>
+          <option value="01">01 - TABELA DE VAREJO</option>
+          <option value="02">02 - TABELA ATACADO</option>
+          <option value="03">03 - TABELA PROMOCÃO</option>
+          <option value="04">04 - TABELA DE CMV</option>
+          <option value="05">05 - TABELA ATACADO ROYALTIES</option>
+          <option value="06">06 - TABELA IGUATEMI</option>
+          <option value="07">07 - TABELA ON LINE</option>
+          <option value="08">08 - TABELA DE CUSTO</option>
+          <option value="09">09 - TABELA PREÇO PROMOCIONAL</option>
+          <option value="10">10 - TABELA MOSTRUÁRIO</option>
+          <option value="11">11 - TABELA RELANÇADOS</option>
+          <option value="12">12 - TABELA PRIVALIA</option>
+          <option value="13">13 - ATACADO PARA LOJA RJ E SP</option>
+          <option value="14">14 - VAREJO PARA RJ</option>
+          <option value="15">15 - CUSTO MÉDIO MÓVEL EFETIVO</option>
+          <option value="16">16 - TABELA TROC</option>
+          <option value="17">17 - CUSTO BRINDE</option>
+        </select>
+      </div>
+
+      <div class="select-option">
+        <h2>Alterações em quais preços ?</h2>
+        <label for="valorOption">Opção de Valor:</label>
+        <select id="valorOption" class="form-select">
+          <option value="valor_liquido">preco_liquido</option>
+          <option value="preco_valor_liquido">preco + preco_liquido</option>
+        </select>
+      </div>
+      <div class="select-file">
+        <h2>Selecione o arquivo para geração de código</h2>
+        <input type="file" id="inputFile" accept=".xlsx" class="form-control" />
+      </div>
+
+      <div class="gerar">
+        <button id="generateButton" class="btn btn-primary">
+          Gerar Código
+        </button>
+      </div>
+
+      <div id="myModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Código Gerado</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <textarea
+                id="output"
+                rows="10"
+                cols="50"
+                class="form-control"
+              ></textarea>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fechar
+              </button>
+              <button type="button" class="btn btn-primary" id="copyButton">
+                Copiar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div>
-      <h2>Alterações em quais preços ?</h2>
-      <label for="valorOption">Opção de Valor:</label>
-      <select id="valorOption">
-        <option value="valor_liquido">preco_liquido</option>
-        <option value="preco_valor_liquido">preco + preco_liquido</option>
-      </select>
-    </div>
-    <div>
-      <h2>selecione o arquivo para geração de codigo</h2>
-      <input type="file" id="inputFile" accept=".xlsx" />
-    </div>
-
-    <div>
-      <textarea id="output" rows="10" cols="50"></textarea>
-    </div>
-    <div>
-      <button id="copyButton">Copiar</button>
-    </div>
-    <div>
-      <p>para zerar a caixa de texto</p>
-      <button id="reloadButton">Recarregar Página</button>
-    </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <script>
-      function handleFile(e) {
-        var codigoTabPreco = document.getElementById("codigoTabPreco").value;
-        if (!codigoTabPreco) {
-          alert("Por favor, selecione uma tabela de preço.");
-          return;
-        }
-
-        var file = e.target.files[0];
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-          var data = new Uint8Array(e.target.result);
-          var workbook = XLSX.read(data, { type: "array" });
-          var sheet = workbook.Sheets[workbook.SheetNames[0]];
-          var jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-          var valorOption = document.getElementById("valorOption").value;
-          var outputText = "";
-          for (var i = 1; i < jsonData.length; i++) {
-            var produto = jsonData[i][0];
-            var valorLiquido = jsonData[i][2]
-              .toString()
-              .replace("R$", "")
-              .trim();
-            var updateQuery = "";
-            if (valorOption === "valor_liquido") {
-              updateQuery =
-                "update produtos_precos set preco_liquido1='" +
-                valorLiquido +
-                "' where produto='" +
-                produto +
-                "' and codigo_tab_preco='" +
-                codigoTabPreco +
-                "';";
-            } else if (valorOption === "preco_valor_liquido") {
-              updateQuery =
-                "update produtos_precos set preco1='" +
-                valorLiquido +
-                "', preco_liquido1='" +
-                valorLiquido +
-                "' where produto='" +
-                produto +
-                "' and codigo_tab_preco='" +
-                codigoTabPreco +
-                "';";
-            }
-            outputText += updateQuery + "\n";
-          }
-
-          var outputTextarea = document.getElementById("output");
-          outputTextarea.value = outputText;
-        };
-
-        reader.readAsArrayBuffer(file);
-      }
-
-      document
-        .getElementById("inputFile")
-        .addEventListener("change", handleFile, false);
-
-      document
-        .getElementById("copyButton")
-        .addEventListener("click", function () {
-          var outputTextarea = document.getElementById("output");
-          outputTextarea.select();
-          document.execCommand("copy");
-        });
-
-      document
-        .getElementById("reloadButton")
-        .addEventListener("click", function () {
-          location.reload();
-        });
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
