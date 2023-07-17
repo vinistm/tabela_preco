@@ -34,8 +34,8 @@
       <h2>Alterações em quais preços ?</h2>
       <label for="valorOption">Opção de Valor:</label>
       <select id="valorOption">
-        <option value="valor_liquido">valor_liquido</option>
-        <option value="preco_valor_liquido">preco + valor_liquido</option>
+        <option value="valor_liquido">preco_liquido</option>
+        <option value="preco_valor_liquido">preco + preco_liquido</option>
       </select>
     </div>
     <div>
@@ -83,7 +83,7 @@
             var updateQuery = "";
             if (valorOption === "valor_liquido") {
               updateQuery =
-                "update produtos_precos set valor_liquido1='" +
+                "update produtos_precos set preco_liquido1='" +
                 valorLiquido +
                 "' where produto='" +
                 produto +
@@ -94,7 +94,7 @@
               updateQuery =
                 "update produtos_precos set preco1='" +
                 valorLiquido +
-                "', valor_liquido1='" +
+                "', preco_liquido1='" +
                 valorLiquido +
                 "' where produto='" +
                 produto +
