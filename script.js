@@ -18,7 +18,9 @@ function handleFile(e) {
     var outputText = "";
     for (var i = 1; i < jsonData.length; i++) {
       var produto = jsonData[i][0];
-      var valorLiquido = jsonData[i][2].toString().replace("R$", "").trim();
+      var valorLiquido = Number(
+        jsonData[i][2].toString().replace("R$", "").trim()
+      ).toFixed(2);
       var updateQuery = "";
       if (valorOption === "valor_liquido") {
         updateQuery =
