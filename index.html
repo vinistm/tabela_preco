@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Carregar arquivo Excel e refatorar dados</title>
+    <title>Carregar arquivo Excel</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <input type="file" id="inputFile" accept=".xlsx" />
     <div>
+      <h2>Selecione a tabela</h2>
       <label for="codigoTabPreco">Código da Tabela de Preços:</label>
       <select id="codigoTabPreco">
+        <option value="">Selecione uma tabela de preço</option>
         <option value="01">01 - TABELA DE VAREJO</option>
         <option value="02">02 - TABELA ATACADO</option>
         <option value="03">03 - TABELA PROMOCÃO</option>
@@ -15,7 +17,7 @@
         <option value="05">05 - TABELA ATACADO ROYALTIES</option>
         <option value="06">06 - TABELA IGUATEMI</option>
         <option value="07">07 - TABELA ON LINE</option>
-        <option value="08" selected>08 - TABELA DE CUSTO</option>
+        <option value="08">08 - TABELA DE CUSTO</option>
         <option value="09">09 - TABELA PREÇO PROMOCIONAL</option>
         <option value="10">10 - TABELA MOSTRUÁRIO</option>
         <option value="11">11 - TABELA RELANÇADOS</option>
@@ -29,21 +31,38 @@
     </div>
 
     <div>
+      <h2>Alterações em quais preços ?</h2>
       <label for="valorOption">Opção de Valor:</label>
       <select id="valorOption">
         <option value="valor_liquido">valor_liquido</option>
         <option value="preco_valor_liquido">preco + valor_liquido</option>
       </select>
     </div>
+    <div>
+      <h2>selecione o arquivo para geração de codigo</h2>
+      <input type="file" id="inputFile" accept=".xlsx" />
+    </div>
 
     <div>
       <textarea id="output" rows="10" cols="50"></textarea>
+    </div>
+    <div>
       <button id="copyButton">Copiar</button>
+    </div>
+    <div>
+      <p>para zerar a caixa de texto</p>
+      <button id="reloadButton">Recarregar Página</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script>
       function handleFile(e) {
+        var codigoTabPreco = document.getElementById("codigoTabPreco").value;
+        if (!codigoTabPreco) {
+          alert("Por favor, selecione uma tabela de preço.");
+          return;
+        }
+
         var file = e.target.files[0];
         var reader = new FileReader();
 
@@ -53,7 +72,6 @@
           var sheet = workbook.Sheets[workbook.SheetNames[0]];
           var jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-          var codigoTabPreco = document.getElementById("codigoTabPreco").value;
           var valorOption = document.getElementById("valorOption").value;
           var outputText = "";
           for (var i = 1; i < jsonData.length; i++) {
@@ -76,7 +94,7 @@
               updateQuery =
                 "update produtos_precos set preco1='" +
                 valorLiquido +
-                "', preco_liquido1='" +
+                "', valor_liquido1='" +
                 valorLiquido +
                 "' where produto='" +
                 produto +
@@ -104,6 +122,12 @@
           var outputTextarea = document.getElementById("output");
           outputTextarea.select();
           document.execCommand("copy");
+        });
+
+      document
+        .getElementById("reloadButton")
+        .addEventListener("click", function () {
+          location.reload();
         });
     </script>
   </body>
