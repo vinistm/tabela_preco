@@ -3,15 +3,22 @@ body {
   flex-direction: column;
   align-items: center;
   row-gap: 10px;
-  width: 70vw;
+  width: 40vw;
   margin: auto;
-  border: 2px solid black;
-  border-radius: 20px;
+  margin-top: 80px;
   background-color: rgb(226, 226, 226);
 }
 
 .container {
   padding: 20px;
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  border-radius: 20px;
+  border: 2px solid rgba(171, 189, 201, 0.418);
+  box-shadow: 1px 1px 5px 1px rgb(58, 80, 95);
+  align-items: center;
+  row-gap: 20px;
 }
 
 .select-table,
@@ -20,12 +27,8 @@ body {
 .select-file {
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-textarea {
-  width: 60vw;
-  border-radius: 10px;
+  align-items: flex-start;
+  width: 30vw;
 }
 
 select {
@@ -35,6 +38,10 @@ select {
   border: none !important;
   border-radius: 10px;
   margin-top: 10px;
+  box-shadow: 1px 1px 5px 1px rgb(58, 80, 95);
+}
+select:hover {
+  cursor: pointer;
 }
 .gerar {
   display: flex;
@@ -43,4 +50,19 @@ select {
 }
 .modal {
   --bs-modal-width: 1000px;
+}
+
+h2 {
+  font-size: 20px;
+}
+#reloadButton {
+  width: 8vw;
+  border-radius: 50px;
+  border: none;
+}
+
+#generateButton {
+  width: 8vw;
+  border-radius: 50px;
+  border: none;
 }
