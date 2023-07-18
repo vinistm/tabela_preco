@@ -41,6 +41,6 @@ select {
   justify-content: center;
   margin-top: 30px;
 }
-.modal-dialog modal-dialog-centered {
-  width: 60vw;
+.modal {
+  --bs-modal-width: 1000px;
 }

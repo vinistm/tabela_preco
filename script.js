@@ -74,4 +74,5 @@ document.getElementById("copyButton").addEventListener("click", function () {
 
 document.getElementById("reloadButton").addEventListener("click", function () {
   location.reload();
+  alert("Selecione nova tabela e suba um novo arquivo!");
 });
