@@ -6,17 +6,18 @@ body {
   width: 40vw;
   margin: auto;
   margin-top: 80px;
-  background-color: rgb(226, 226, 226);
+  background-color: rgb(0, 0, 0);
+  color: white !important;
 }
 
 .container {
   padding: 20px;
   display: flex;
-  background-color: white;
+  background-color: rgb(34, 34, 34);
   flex-direction: column;
   border-radius: 20px;
-  border: 2px solid rgba(171, 189, 201, 0.418);
-  box-shadow: 1px 1px 5px 1px rgb(58, 80, 95);
+  border: 2px solid rgba(211, 211, 211, 0.418);
+  box-shadow: 1px 1px 5px 1px rgb(156, 156, 156);
   align-items: center;
   row-gap: 20px;
 }
@@ -52,19 +53,30 @@ select:hover {
 .modal {
   --bs-modal-width: 1000px;
 }
+#myModal {
+  transition: 2s;
+}
 
 h2 {
   font-size: 20px;
 }
 #reloadButton {
   width: 8vw;
-  border-radius: 50px;
+  border-radius: 5px;
   border: none;
-  background-color: rgb(210, 57, 30);
+  background-color: rgb(68, 68, 68);
 }
-
+#reloadButton:hover {
+  background-color: brown;
+  transition: background-color 2s;
+}
 #generateButton {
   width: 8vw;
-  border-radius: 50px;
+  border-radius: 5px;
   border: none;
+  background-color: rgb(68, 68, 68);
+}
+#generateButton:hover {
+  background-color: green;
+  transition: background-color 3s;
 }

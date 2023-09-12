@@ -18,6 +18,7 @@ function handleFile(e) {
     var outputText = "";
     for (var i = 1; i < jsonData.length; i++) {
       var produto = jsonData[i][0];
+      var cor = jsonData[i][1];
       var valorLiquido = Number(
         jsonData[i][2].toString().replace("R$", "").trim()
       ).toFixed(2);
@@ -42,6 +43,32 @@ function handleFile(e) {
           "' and codigo_tab_preco='" +
           codigoTabPreco +
           "';";
+      } else if (valorOption === "preco_valor_cor") {
+        updateQuery =
+          "update produtos_preco_cor set preco1='" +
+          valorLiquido +
+          "', preco_liquido1='" +
+          valorLiquido +
+          "' where produto='" +
+          produto +
+          "' and cor_produto='" +
+          cor +
+          "' and codigo_tab_preco='" +
+          codigoTabPreco +
+          "';";
+      } else if (valorOption === "preco_valor_cor_insert") {
+        updateQuery =
+          "INSERT INTO PRODUTOS_PRECO_COR(CODIGO_TAB_PRECO,PRODUTO,COR_PRODUTO,PRECO1,PRECO_LIQUIDO1) VALUES('" +
+          codigoTabPreco +
+          "', '" +
+          produto +
+          "','" +
+          cor +
+          "','" +
+          valorLiquido +
+          "','" +
+          valorLiquido +
+          "')";
       }
       outputText += updateQuery + "\n";
     }
